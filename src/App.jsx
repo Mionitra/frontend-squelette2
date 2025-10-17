@@ -7,6 +7,7 @@ import ChatBot from './components/bot';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import Chat from './components/Chat';
 
 
 const App = () => (
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/verify-code" element={<VerifyCode />} />
           <Route path="/bot" element={<ChatBot />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </BrowserRouter>
   </GoogleOAuthProvider>
