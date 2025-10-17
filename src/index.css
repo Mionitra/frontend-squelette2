@@ -1,0 +1,13 @@
+@import "tailwindcss";
+html, :root, #root {
+  color-scheme: light !important;
+}
+@font-face {
+    font-family: "Teko";
+    src: url(/fonts/Teko/Teko-VariableFont_wght.ttf);
+    src: url(/fonts/Teko/Teko-VariableFont_wght.ttf) format("truetype");
+    ;
+}
+.font-teko {
+    font-family:'Teko', Tahoma, Geneva, Verdana, sans-serif
+}
