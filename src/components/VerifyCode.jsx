@@ -17,7 +17,7 @@ export default function VerifyCode() {
       localStorage.setItem('refresh', res.data.refresh);
       localStorage.removeItem('user_id');
       alert('Connexion réussie');
-      navigate('/profile');
+      navigate('/');
     } catch (err) {
       alert(err.response?.data?.error || 'Code invalide');
     }
