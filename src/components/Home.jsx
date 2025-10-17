@@ -108,14 +108,14 @@ const Home = () => {
         <Navbar />
 
         {/* Vertical bars: hidden on tiny */}
-        <div className={`hidden sm:fixed ${isTiny ? '' : 'left-4'} top-24 bottom-24 sm:flex flex-col justify-between items-center w-10 sm:left-8 sm:top-32 sm:bottom-32 sm:w-14`}>
+        {/* <div className={`hidden sm:fixed ${isTiny ? '' : 'left-4'} top-24 bottom-24 sm:flex flex-col justify-between items-center w-10 sm:left-8 sm:top-32 sm:bottom-32 sm:w-14`}>
           {!isTiny && <div className="w-[1px] h-20 sm:h-32 bg-gradient-to-b from-transparent via-cyan-400 to-transparent" />}
           {!isTiny && <div className="rotate-180 tracking-[0.45em] text-cyan-400 text-[11px] sm:text-xs writing-mode-vertical">EXPLOREZ</div>}
           {!isTiny && <div className="w-[1px] h-20 sm:h-32 bg-gradient-to-b from-transparent via-cyan-400 to-transparent" />}
-        </div>
+        </div> */}
 
         {/* Right live indicator: hidden on tiny */}
-        {!isTiny && (
+        {/* {!isTiny && (
           <div className="hidden sm:fixed right-4 top-24 sm:flex flex-col items-end space-y-4 sm:right-8 sm:top-32 sm:space-y-6">
             <div className="flex items-center space-x-3">
               <div className="w-2.5 h-2.5 rounded-full bg-cyan-400"></div>
@@ -124,15 +124,16 @@ const Home = () => {
             <div className="h-28 sm:h-36 w-[1px] bg-gradient-to-b from-cyan-400/50 to-transparent mx-auto"></div>
             <div className="text-[11px] sm:text-xs text-gray-400 tracking-wider">{new Date().getFullYear()}</div>
           </div>
-        )}
+        )} */}
 
         {/* Header: navigation links hidden on mobile/tiny */}
-        <div className="fixed top-20 left-4 right-4 sm:top-32 sm:left-32 sm:right-32">
+        <div className="fixed top-25 left-4 right-4 md:top-15 md:left-1/3 md:-translate-x-1/2">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3 sm:space-x-6">
+            {/* <div className="flex items-center space-x-3 sm:space-x-6">
               <div className={`text-[10px] sm:text-xs text-cyan-400 tracking-[0.28em]`}>SECTION {currentSection + 1}/4</div>
               <div className="w-8 sm:w-16 h-[1px] bg-gradient-to-r from-cyan-400 to-transparent"></div>
-            </div>
+            </div> */}
+            <div className="w-2 h-2"></div>
             <div className="hidden sm:flex items-center space-x-6 sm:space-x-10">
               {['SITE', 'APP MOBILE', 'DIGITALISATION', 'COLLABORATION'].map((item, index) => (
                 <div key={index} className={`text-xs tracking-[0.16em] transition-colors duration-300 ${currentSection === index ? 'text-cyan-400' : 'text-gray-600'}`}>{item}</div>
@@ -149,7 +150,7 @@ const Home = () => {
               <div className="col-span-12 md:col-span-7 text-white">
                 <div className="space-y-3">
                   <p className={`text-cyan-400 ${isTiny ? 'text-[10px]' : 'text-xs'} tracking-[0.22em] font-light mb-1`}>{shortSubtitle(sections[currentSection].subtitle)}</p>
-                  <h2 className={`font-bold bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent leading-tight ${isTiny ? 'text-lg' : isMobile ? 'text-xl sm:text-3xl' : 'text-2xl md:text-5xl lg:text-6xl'}`}>{shortTitle(sections[currentSection].title)}</h2>
+                  <h2 className={`font-bold bg-gradient-to-r font-teko from-white to-cyan-400 bg-clip-text text-transparent leading-tight ${isTiny ? 'text-lg' : isMobile ? 'text-xl sm:text-3xl' : 'text-2xl md:text-5xl lg:text-6xl'}`}>{shortTitle(sections[currentSection].title)}</h2>
                   <p className={`text-gray-400 font-light tracking-wider max-w-full md:max-w-2xl leading-relaxed ${isTiny ? 'text-sm' : 'text-base'}`}>{isTiny ? short(sections[currentSection].description, 60) : isMobile ? short(sections[currentSection].description, 100) : sections[currentSection].description}</p>
                 </div>
               </div>
@@ -211,7 +212,7 @@ const Home = () => {
         </div>
 
         {/* Timeline - desktop only */}
-        <div className="hidden lg:block fixed right-40 top-1/2 -translate-y-1/2">
+        {/* <div className="hidden lg:block fixed right-40 top-1/2 -translate-y-1/2">
           <div className="flex flex-col space-y-12">
             {sections.map((_, index) => (
               <div key={index} className="flex items-center space-x-6">
@@ -220,7 +221,7 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

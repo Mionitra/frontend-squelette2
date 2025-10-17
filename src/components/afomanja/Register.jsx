@@ -45,13 +45,13 @@ const Register = () => {
 
   return (
     <>
-      <div className=" absolute -mt-20 flex justify-between items-center px-20">
+      <div className=" absolute flex text-cyan-50 justify-between items-center px-20">
         <div className="w-1/3">
-          <h1 className="uppercase text-6xl font-teko -letter-space-1 text-cyan-950">
+          <h1 className="uppercase text-8xl font-teko -letter-space-1 bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400">
             sign up for afomanja news.
           </h1>
           <div className="w-1 h-16"></div>
-          <p>
+          <p >
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
             ab dolore dicta deserunt repellendus fugiat porro facilis laudantium
             dignissimos itaque quaerat placeat doloremque eaque, sunt rem
@@ -67,19 +67,19 @@ const Register = () => {
         >
           <input
             type="text"
-            className="text-cyan-950 p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 rounded-lg"
+            className="text-cyan-50 p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg"
             placeholder="FIRST NAME"
           />
           <input
             type="text"
             value={form.username}
             onChange={(e) => setForm({ ...form, username: e.target.value })}
-            className="text-cyan-950 p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 rounded-lg"
+            className="text-cyan-50 p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg"
             placeholder="USERNAME"
           />
           <input
             type="email"
-            className="text-cyan-950 p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 rounded-lg"
+            className="text-cyan-50 p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg"
             placeholder="EMAIL"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -91,14 +91,14 @@ const Register = () => {
               type={showPassword ? "text" : "password"}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full text-cyan-950 p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 rounded-lg"
+              className="w-full text-cyan-50 p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg"
               placeholder="PASSWORD"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-cyan-950/70 hover:text-cyan-950"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-cyan-50/70 hover:text-cyan-50"
             >
               {showPassword ? (
                 <AiOutlineEye size={20} />
@@ -120,7 +120,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="text-pink-400 cursor-pointer text-center p-4 focus:outline-none focus:ring-0 focus:border-pink-400 border-3 border-pink-400/50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer text-center p-4 focus:outline-none focus:ring-0 bg-gradient-to-r from-white to-cyan-400 text-black font-semibold hover:from-cyan-400 hover:to-white duration-1000 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "REGISTERING..." : "SIGN UP"}
           </button>

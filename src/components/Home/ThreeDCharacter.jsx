@@ -3,112 +3,119 @@ import { OrbitControls, useGLTF, PerspectiveCamera } from '@react-three/drei';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-function SpaceCanvas() {
+export function SpaceCanvas() {
   const ref = useRef(null);
   const animRef = useRef(null);
+  const starsRef = useRef([]);
+  const nebulaLayersRef = useRef([
+    { r: 30, g: 8, b: 40, a: 0.06, scale: 1.0 },
+    { r: 6, g: 18, b: 60, a: 0.06, scale: 0.8 },
+    { r: 12, g: 40, b: 80, a: 0.05, scale: 0.5 }
+  ]);
 
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+    let cssWidth = window.innerWidth;
+    let cssHeight = window.innerHeight;
+    let dpr = window.devicePixelRatio || 1;
 
-    const starsCount = Math.floor((width * height) / 4000); // density adaptable
-    const stars = Array.from({ length: starsCount }).map(() => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      z: Math.random() * 1, // depth for parallax and twinkle
-      size: Math.random() * 1.5 + 0.2,
-      twinkle: Math.random() * Math.PI * 2
-    }));
+    function initStars() {
+      cssWidth = window.innerWidth;
+      cssHeight = window.innerHeight;
+      dpr = window.devicePixelRatio || 1;
 
-    // Nebula layers for soft colorful backdrop
-    const nebulaLayers = [
-      { r: 30, g: 8, b: 40, a: 0.06, scale: 1.0 },
-      { r: 6, g: 18, b: 60, a: 0.06, scale: 0.8 },
-      { r: 12, g: 40, b: 80, a: 0.05, scale: 0.5 }
-    ];
+      canvas.width = Math.max(1, Math.floor(cssWidth * dpr));
+      canvas.height = Math.max(1, Math.floor(cssHeight * dpr));
+      canvas.style.width = cssWidth + 'px';
+      canvas.style.height = cssHeight + 'px';
 
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const starsCount = Math.floor((cssWidth * cssHeight) / 4000);
+      const stars = Array.from({ length: starsCount }).map(() => ({
+        x: Math.random() * cssWidth,
+        y: Math.random() * cssHeight,
+        z: Math.random(),
+        size: Math.random() * 1.5 + 0.2,
+        twinkle: Math.random() * Math.PI * 2
+      }));
+      starsRef.current = stars;
     }
 
     function drawNebula() {
-      nebulaLayers.forEach((layer, i) => {
+      nebulaLayersRef.current.forEach((layer, i) => {
         const grad = ctx.createRadialGradient(
-          width * (0.2 + 0.6 * ((i + 0.3) % 1)),
-          height * (0.2 + 0.6 * ((i + 0.7) % 1)),
+          cssWidth * (0.2 + 0.6 * ((i + 0.3) % 1)),
+          cssHeight * (0.2 + 0.6 * ((i + 0.7) % 1)),
           100 * layer.scale,
-          width * 0.5,
-          height * 0.5,
-          Math.max(width, height) * (0.9 * layer.scale)
+          cssWidth * 0.5,
+          cssHeight * 0.5,
+          Math.max(cssWidth, cssHeight) * (0.9 * layer.scale)
         );
         grad.addColorStop(0, `rgba(${layer.r},${layer.g},${layer.b},${layer.a})`);
         grad.addColorStop(1, `rgba(0,0,0,0)`);
         ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
+        ctx.fillRect(0, 0, cssWidth, cssHeight);
       });
     }
 
     function render(time) {
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
 
-      // subtle background gradient
-      const g = ctx.createLinearGradient(0, 0, 0, height);
-      g.addColorStop(0, '#FFFFFFFF');
-      g.addColorStop(1, '#3A3939FF');
+      const g = ctx.createLinearGradient(0, 0, 0, cssHeight);
+      g.addColorStop(0, '#0C0C0CFF');
+      g.addColorStop(1, '#000000FF');
       ctx.fillStyle = g;
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillRect(0, 0, cssWidth, cssHeight);
 
-      // nebula
       ctx.globalCompositeOperation = 'lighter';
       drawNebula();
 
-      // stars
       ctx.globalCompositeOperation = 'source-over';
+      const stars = starsRef.current;
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        // twinkle effect
         const t = Math.sin((time / 800) + s.twinkle) * 0.5 + 0.5;
-        const brightness = 0.6 + 0.4 * t;
-
-        // parallax slight movement
-        const px = (s.x + Math.sin((time / 3000) + s.z * 10) * 20 * s.z) % width;
-        const py = (s.y + Math.cos((time / 3500) + s.z * 10) * 20 * s.z) % height;
+        const brightness = 0.6 + 0.6 * t;
+        const px = (s.x + Math.sin((time / 3000) + s.z * 10) * 20 * s.z + cssWidth) % cssWidth;
+        const py = (s.y + Math.cos((time / 3500) + s.z * 10) * 20 * s.z + cssHeight) % cssHeight;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255,255,255,${brightness})`;
+        ctx.fillStyle = `rgba(255,255,255,${Math.min(1, brightness)})`;
         ctx.arc(px, py, s.size * (0.6 + s.z), 0, Math.PI * 2);
         ctx.fill();
 
-        // small glow
-        if (Math.random() < 0.002) {
+        const glowIntensity = Math.max(0, (t - 0.85) / 0.15);
+        if (glowIntensity > 0.01) {
           ctx.beginPath();
-          ctx.fillStyle = `rgba(180,220,255,${0.06 * t})`;
-          ctx.arc(px, py, s.size * 4 * t, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(180,220,255,${0.06 * glowIntensity})`;
+          ctx.arc(px, py, s.size * 4 * glowIntensity, 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
-      // faint starfield noise
       ctx.globalAlpha = 0.02;
       ctx.fillStyle = '#ffffff';
       for (let i = 0; i < 30; i++) {
-        ctx.fillRect(Math.random() * width, Math.random() * height, 1, 1);
+        const rx = (Math.sin(time * 0.0001 + i) * 10000) % cssWidth;
+        const ry = (Math.cos(time * 0.00013 + i) * 10000) % cssHeight;
+        ctx.fillRect(Math.abs(rx), Math.abs(ry), 1, 1);
       }
       ctx.globalAlpha = 1;
 
       animRef.current = requestAnimationFrame(render);
     }
 
-    window.addEventListener('resize', resize);
+    initStars();
+    const handleResize = () => initStars();
+    window.addEventListener('resize', handleResize);
     animRef.current = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', handleResize);
       if (animRef.current) cancelAnimationFrame(animRef.current);
     };
   }, []);
@@ -116,6 +123,7 @@ function SpaceCanvas() {
   return (
     <canvas
       ref={ref}
+      aria-hidden="true"
       style={{
         position: 'absolute',
         left: 0,

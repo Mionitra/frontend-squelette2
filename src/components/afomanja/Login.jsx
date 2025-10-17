@@ -49,11 +49,11 @@ const Login = () => {
     <>
       <div className="flex justify-between items-center px-20 absolute top-1/2 -translate-y-1/2">
         <div className="w-1/3">
-          <h1 className="uppercase text-9xl font-teko -letter-space-1 text-cyan-950">
+          <h1 className="uppercase text-9xl font-teko -letter-space-1 bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400">
             welcome back sweety.
           </h1>
           <div className="w-1 h-5"></div>
-          <p className='text-neutral-950'>
+          <p className='text-neutral-50'>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
             ab dolore dicta deserunt repellendus fugiat porro facilis laudantium
             dignissimos itaque quaerat{" "}
@@ -67,7 +67,7 @@ const Login = () => {
             type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="text-cyan-950 p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 bg-white rounded-lg"
+            className="text-neutral-50 p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg"
             placeholder="EMAIL"
             required
           />
@@ -78,14 +78,14 @@ const Login = () => {
               type={showPassword ? "text" : "password"}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full text-cyan-950 p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 rounded-lg"
+              className="w-full text-neutral-50 p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg"
               placeholder="PASSWORD"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-cyan-950/70 hover:text-cyan-950"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-50/70 hover:text-neutral-50"
             >
               {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
             </button>
@@ -98,23 +98,23 @@ const Login = () => {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="text-pink-400 cursor-pointer text-center p-4 focus:outline-none focus:ring-0 focus:border-pink-400 border-3 border-pink-400/50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className=" cursor-pointer text-center p-4 bg-gradient-to-r from-cyan-50 to-cyan-400 font-semibold hover:from-cyan-400 hover:to-cyan-50 duration-1000 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "SIGNING IN..." : "SUBMIT"}
           </button>
 
 
           <div className="flex justify-between items-center gap-5">
-            <div className="w-1/3 h-0.5 bg-cyan-950/20"></div>
-            <span className='flex-1'>Or sign in with socials</span>
-            <div className="w-1/3 h-0.5 bg-cyan-950/20"></div>
+            <div className="w-1/3 h-0.5 bg-cyan-50"></div>
+            <span className='flex-1 text-neutral-50 text-center'>Or</span>
+            <div className="w-1/3 h-0.5 bg-cyan-50"></div>
           </div>
 
           <button
             type="button"
             onClick={handleGoogleLogin}
             // disabled={googleLoading}
-            className="text-cyan-950 uppercase gap-4 cursor-pointer text-center p-4 focus:outline-none focus:ring-0 focus:border-cyan-950 border-3 border-cyan-950/50 rounded-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-neutral-50 uppercase gap-4 cursor-pointer text-center p-4 focus:outline-none focus:ring-0 focus:border-cyan-300 border-3 border-cyan-300/50 rounded-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <FcGoogle size={20} />
             GOOGLE
